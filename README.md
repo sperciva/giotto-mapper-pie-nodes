@@ -5,11 +5,11 @@ Step 1: Download the jupyter notebook and the procrustes.py file and put them in
 
 Step 2: Inside of your directory, create a folder called "passiflora_pie_graph".
 
-Step 3: Inside of this folder, create a folder called "kepler".
+Step 3: Inside of this folder, create a folder called "giotto".
 
-Step 4: Download the rest of the files (except for the readme) and put them in the "kepler" folder.
+Step 4: Download the rest of the files (except for the readme) and put them in the "giotto" folder.
 
-Step 5: Inside the "kepler" folder, make a folder called "node_avg_outline".
+Step 5: Inside the "giotto" folder, make a folder called "node_avg_outline".
 
 Step 6: Run the Jupyter notebook.
 
