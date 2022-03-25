@@ -51,7 +51,7 @@ body {
 
 </style>
 <header>
-    <h1>Giotto Mapper graph on procrustes alignment of Passiflora leaf data with continuous coloring</h1>
+    <h1>Giotto Mapper graph on procrustes alignment of Passiflora leaf data</h1>
     <header>
 
 <body>
@@ -81,15 +81,15 @@ body {
         width = window.innerWidth - 5;
         height = window.innerHeight - 5;
         
-// This is for if you want to go from one color to the other
-//	var color = d3.scaleLinear()
-//	    .domain([0, 1])
-//	    .range(["red", "blue"]);
 
-// This is for fancier color scales, like divering or rainbow
-	var color = d3.scaleSequential()
-	    .domain([0, 1])
-	    .interpolator(d3.interpolateInferno)
+    var color = d3.scaleOrdinal(d3.schemeCategory10);
+	color(1);
+	color(2);
+	color(3);
+	color(4);
+	color(5);
+	color(6);
+	color(7);
 
     
     const forceX = d3.forceX(width / 4 ).strength(0.05)
@@ -103,7 +103,7 @@ body {
             }))
 	    .force('x', forceX)
 	    .force('y',  forceY)
-	    .force("charge", d3.forceManyBody().strength(-1200)) //-2000
+	    .force("charge", d3.forceManyBody().strength(-1200))
 	    .force("center", d3.forceCenter(width / 2, height / 2));
             
             
@@ -144,33 +144,42 @@ body {
 
         var node = g.append("g")
                 .attr("class", "nodes")
-                .selectAll("circle")
+                .selectAll("g")
                 .data(graph.nodes)
                 .enter()
-                .append("circle")
-                .attr('stroke','#FFFFFF')
-                .attr('stroke-width', 3)
-                .attr("r", function (d) {
-                    return Math.pow(d.node_size,0.6)+12;
-                })
-                .attr("fill", circleColor)              
-                // tooltips
+                .append("g")
+                
                 .on("mouseover", function(d) {
-   			tooltip.html("<b> Node ID: </b>" + d.id + "<br/>"+"<b> Lens value: </b>" + Math.round(d.heteroblasty*10000)/10000);
-    			tooltip.append("img")
-      				.attr("src", "node_avg_outline/" + d.id + ".png")
-      				.attr("width", "150px")
-      				.attr("height", "150px");
-    			tooltip.style("visibility", "visible");
-  						})
-  		.on("mousemove", function() {
-    			return tooltip.style("top", (event.pageY - 10) + "px").style("left", (event.pageX + 10) + "px");
-  						})
-  		.on("mouseout", function() {
-    			return tooltip.style("visibility", "hidden");
-  						});
+   tooltip.html("<b> Node ID: </b>" + d.id + "<br/>"+"<b> Lens value: </b>" + Math.round(d.heteroblasty*10000)/10000);
+    tooltip.append("img")
+      .attr("src", "node_avg_outline/" + d.id + ".png")
+//      .attr("x", -8)
+//      .attr("y", -8)
+      .attr("width", "150px")
+      .attr("height", "150px");
+    tooltip.style("visibility", "visible");
+  })
+  .on("mousemove", function() {
+    return tooltip.style("top", (event.pageY -
+      10) + "px").style("left", (event.pageX + 10) + "px");
+  })
+  .on("mouseout", function() {
+    return tooltip.style("visibility", "hidden");
+  });
 
 
+
+        /* Draw the respective pie chart for each node */
+        node.each(function (d) {
+            NodePieBuilder.drawNodePie(d3.select(this), d.pieChart, {
+                parentNodeColor: color(d.group),
+                outerStrokeWidth: Math.sqrt(d.node_size)+5,
+                showLabelText: false,
+                radius: Math.pow(d.node_size,0.6)+10,             
+                labelText: d.id,
+                labelColor: color(d.group)
+            });
+        });
 
         simulation
                 .nodes(graph.nodes)
@@ -191,12 +200,13 @@ body {
     //add zoom capabilities 
     var zoom_handler = d3.zoom()
         .on("zoom", zoom_actions);
+        
+//        var zoom_handler = d3.zoom()
+//        .on("zoom", zoom_actions, function(){
+//    svg.attr("transform", d3.event.transform);
+//});
 
     zoom_handler(svg);  
-    
-    function circleColor(d){
-		return color(d.heteroblasty);
-}
     
     resize();
     d3.select(window).on("resize", resize);   
@@ -238,7 +248,7 @@ body {
 
 
     var sequentialScale = d3.scaleOrdinal(d3.schemeCategory10)
-      .domain([1, 2, 3, 4, 5, 6, 7]);
+      .domain(['A', 'B', 'C', 'D', 'E', 'F', 'G']);
   
     var svg = d3.select("svg"),
         width = +svg.attr("width"),
@@ -256,7 +266,7 @@ body {
       .shapeWidth(30)
       .cells(7)
       .orient("vertical")
-		.title("Heteroblasty")
+		.title("Morphotype")
 		.titleWidth(100)
       .scale(sequentialScale) 
       
