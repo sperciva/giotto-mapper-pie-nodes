@@ -1,0 +1,8 @@
+Mapper: Giotto
+Lens: Heteroblasty
+Coloring: Categorical
+Distance: Correlation
+Intervals: 39
+Overlap: 0.7
+Epsilon: 0.021
+Min samples: 2
