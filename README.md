@@ -28,9 +28,15 @@ Step 9: Navigate to the folder containing the index.html file.
 Step 10: Now that you have successfully ran the Passiflora example, try modifying it for your data!
 
 Thank you to the following resources:
+
     - https://bl.ocks.org/puzzler10/4438752bb93f45dc5ad5214efaa12e4a
+    
     - https://gist.github.com/kgeorgiou/68f864364f277720252d0329408433ae
+
     - https://bl.ocks.org/mbostock/3355967
+    
     - https://codepen.io/renx777/pen/BmBvzL
+    
     - https://bl.ocks.org/almsuarez/4333a12d2531d6c1f6f22b74f2c57102
+    
     - https://stackoverflow.com/questions/20052964/d3-how-to-add-image-to-the-label-of-a-graph-node
